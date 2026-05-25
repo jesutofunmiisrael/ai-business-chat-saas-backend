@@ -1,52 +1,68 @@
-const mongoose = require("mongoose");
+const mongoose =
+  require("mongoose");
 
-const workspaceSchema = new mongoose.Schema(
-  {
-    name: {
-      type: String,
-      required: true,
-    },
+const workspaceSchema =
+  new mongoose.Schema(
+    {
+      companyName: {
+        type: String,
+        required: true,
+      },
 
-    owner: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
+      companyWebsite: {
+        type: String,
+      },
 
-    agents: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
+      companySize: {
+        type: String,
+      },
+
+      industry: {
+        type: String,
+      },
+
+      businessDescription: {
+        type: String,
+      },
+
+      aiHelp: {
+  type: String,
+},
+      tone: {
+        type: String,
+        default:
+          "professional",
+      },
+
+      owner: {
+        type:
+          mongoose.Schema.Types
+            .ObjectId,
+
         ref: "User",
       },
-    ],
 
-businessName: {
-  type: String,
-},
+      agents: [
+        {
+          type:
+            mongoose.Schema.Types
+              .ObjectId,
 
-businessType: {
-  type: String,
-},
+          ref: "User",
+        },
+      ],
 
-businessDescription: {
-  type: String,
-},
+      widgetToken: {
+        type: String,
+      },
+    },
+    {
+      timestamps: true,
+    }
+  );
 
-tone: {
-  type: String,
-  default: "professional",
-},
-widgetToken: {
-  type: String,
-},
-
-
-  },
-  {
-    timestamps: true,
-  }
-);
-
-module.exports = mongoose.model(
-  "Workspace",
-  workspaceSchema
-);
+module.exports =
+  mongoose.model(
+    "Workspace",
+    workspaceSchema
+  );
