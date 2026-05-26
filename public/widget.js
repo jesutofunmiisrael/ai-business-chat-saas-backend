@@ -48,38 +48,50 @@
   chatBox.innerHTML = `
 
     <!-- HEADER -->
+<div
+  style="
+    background:linear-gradient(135deg,#7c3aed,#5b4ef5);
+    color:white;
+    padding:16px 18px;
+    font-weight:600;
+    font-size:16px;
 
-    <div
-      style="
-        background:linear-gradient(135deg,#7c3aed,#5b4ef5);
-        color:white;
-        padding:16px;
-        font-weight:600;
-        font-size:16px;
-        display:flex;
-        align-items:center;
-        justify-content:space-between;
-      "
-    >
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
 
-      <div>
-        ApexChat AI
-      </div>
+    min-height:70px;
+  "
+>
 
-      <button
-        id="closeChat"
-        style="
-          background:none;
-          border:none;
-          color:white;
-          font-size:24px;
-          cursor:pointer;
-        "
-      >
-        ×
-      </button>
+  <div>
+    ApexChat AI
+  </div>
 
-    </div>
+  <button
+    id="closeChat"
+    style="
+      background:none;
+      border:none;
+
+      color:white;
+
+      font-size:28px;
+
+      cursor:pointer;
+
+      width:40px;
+      height:40px;
+
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    "
+  >
+    ×
+  </button>
+
+</div>
 
     <!-- MESSAGES -->
 
