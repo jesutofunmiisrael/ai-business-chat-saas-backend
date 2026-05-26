@@ -18,9 +18,7 @@ const aiRoutes =
 
 const app = express();
 
-/* ─────────────────────────────
-   RATE LIMITER
-───────────────────────────── */
+
 
 const aiLimiter = rateLimit({
 
@@ -34,9 +32,7 @@ const aiLimiter = rateLimit({
 
 });
 
-/* ─────────────────────────────
-   MIDDLEWARE
-───────────────────────────── */
+
 
 app.use(cors());
 
@@ -48,9 +44,7 @@ app.use(
   )
 );
 
-/* ─────────────────────────────
-   ROUTES
-───────────────────────────── */
+
 
 app.get("/", (req, res) => {
 
