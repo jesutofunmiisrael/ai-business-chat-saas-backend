@@ -1,17 +1,6 @@
 (function () {
 
-  // SOCKET CONNECTION
-  const socket = io(
-    "http://localhost:5000"
-  );
-
-  // LOAD SAVED CONVERSATION
-  let conversationId =
-    localStorage.getItem(
-      "conversationId"
-    ) || null;
-
-  // GET TOKEN FROM SCRIPT
+  // GET TOKEN
   const token =
     document.currentScript.getAttribute(
       "data-token"
@@ -19,43 +8,16 @@
 
   // API URL
   const API_URL =
-    `http://localhost:5000/api/ai/widget/chat/${token}`;
+    `https://ai-business-chat-saas-backend.onrender.com/api/ai/widget/chat/${token}`;
 
   // CREATE CHAT BUTTON
   const chatButton =
     document.createElement("button");
 
-  chatButton.innerText = "Chat";
+  chatButton.id =
+    "apexchat-widget-button";
 
-  chatButton.style.position =
-    "fixed";
-
-  chatButton.style.bottom =
-    "20px";
-
-  chatButton.style.right =
-    "20px";
-
-  chatButton.style.padding =
-    "12px 20px";
-
-  chatButton.style.borderRadius =
-    "50px";
-
-  chatButton.style.border =
-    "none";
-
-  chatButton.style.background =
-    "#000";
-
-  chatButton.style.color =
-    "#fff";
-
-  chatButton.style.cursor =
-    "pointer";
-
-  chatButton.style.zIndex =
-    "9999";
+  chatButton.innerHTML = "💬";
 
   document.body.appendChild(
     chatButton
@@ -65,72 +27,73 @@
   const chatBox =
     document.createElement("div");
 
-  chatBox.style.position =
-    "fixed";
-
-  chatBox.style.bottom =
-    "80px";
-
-  chatBox.style.right =
-    "20px";
-
-  chatBox.style.width =
-    "300px";
-
-  chatBox.style.height =
-    "400px";
-
-  chatBox.style.background =
-    "#fff";
-
-  chatBox.style.border =
-    "1px solid #ddd";
-
-  chatBox.style.borderRadius =
-    "10px";
+  chatBox.id =
+    "apexchat-widget-container";
 
   chatBox.style.display =
     "none";
 
-  chatBox.style.flexDirection =
-    "column";
-
-  chatBox.style.padding =
-    "10px";
-
-  chatBox.style.zIndex =
-    "9999";
-
-  // CHAT UI
   chatBox.innerHTML = `
+    
+    <div
+      style="
+        background:#5b4ef5;
+        color:white;
+        padding:16px;
+        font-weight:600;
+        font-size:16px;
+      "
+    >
+      ApexChat AI
+    </div>
+
     <div
       id="messages"
       style="
         flex:1;
         overflow:auto;
-        margin-bottom:10px;
+        padding:16px;
+        height:420px;
+        background:#f9fafb;
       "
     ></div>
 
-    <input
-      id="messageInput"
-      placeholder="Type message..."
+    <div
       style="
-        padding:10px;
-        width:100%;
-        margin-bottom:10px;
-      "
-    />
-
-    <button
-      id="sendBtn"
-      style="
-        padding:10px;
-        cursor:pointer;
+        padding:14px;
+        border-top:1px solid #eee;
+        display:flex;
+        gap:10px;
       "
     >
-      Send
-    </button>
+
+      <input
+        id="messageInput"
+        placeholder="Type your message..."
+        style="
+          flex:1;
+          padding:12px;
+          border-radius:10px;
+          border:1px solid #ddd;
+          outline:none;
+        "
+      />
+
+      <button
+        id="sendBtn"
+        style="
+          background:#5b4ef5;
+          color:white;
+          border:none;
+          padding:12px 16px;
+          border-radius:10px;
+          cursor:pointer;
+        "
+      >
+        Send
+      </button>
+
+    </div>
   `;
 
   document.body.appendChild(
@@ -155,6 +118,7 @@
 
   // OPEN/CLOSE CHAT
   chatButton.onclick = () => {
+
     chatBox.style.display =
       chatBox.style.display ===
       "none"
@@ -162,10 +126,11 @@
         : "none";
   };
 
-  // PRESS ENTER TO SEND
+  // SEND ON ENTER
   input.addEventListener(
     "keypress",
     (event) => {
+
       if (event.key === "Enter") {
         sendBtn.click();
       }
@@ -180,9 +145,8 @@
 
     if (!message) return;
 
-    // SHOW USER MESSAGE
     messagesDiv.innerHTML += `
-      <div style="margin-bottom:10px;">
+      <div style="margin-bottom:14px;">
         <strong>You:</strong>
         ${message}
       </div>
@@ -190,28 +154,8 @@
 
     input.value = "";
 
-    // SHOW TYPING
-    const loadingMessage =
-      document.createElement(
-        "div"
-      );
-
-    loadingMessage.innerHTML = `
-      <div style="margin-bottom:10px;">
-        <strong>AI:</strong>
-        Typing...
-      </div>
-    `;
-
-    messagesDiv.appendChild(
-      loadingMessage
-    );
-
-    sendBtn.disabled = true;
-
     try {
 
-      // SEND TO BACKEND
       const response =
         await fetch(API_URL, {
 
@@ -224,40 +168,19 @@
 
           body: JSON.stringify({
             message,
-            conversationId,
           }),
         });
 
-      // GET RESPONSE
       const data =
         await response.json();
 
-      // SAVE CONVERSATION ID
-      conversationId =
-        data.conversationId;
-
-      localStorage.setItem(
-        "conversationId",
-        conversationId
-      );
-
-      // JOIN SOCKET ROOM
-      socket.emit(
-        "joinConversation",
-        conversationId
-      );
-
-      // SHOW AI RESPONSE
-      loadingMessage.innerHTML = `
-        <div style="margin-bottom:10px;">
+      messagesDiv.innerHTML += `
+        <div style="margin-bottom:14px;">
           <strong>AI:</strong>
           ${data.reply}
         </div>
       `;
 
-      sendBtn.disabled = false;
-
-      // AUTO SCROLL
       messagesDiv.scrollTop =
         messagesDiv.scrollHeight;
 
@@ -265,36 +188,7 @@
 
       console.log(error);
 
-      sendBtn.disabled = false;
     }
   };
-
-  // LISTEN FOR LIVE AGENT REPLIES
-  socket.on(
-    "newMessage",
-    (data) => {
-
-      const lastMessage =
-        data.messages[
-          data.messages.length - 1
-        ];
-
-      if (
-        lastMessage.sender ===
-        "agent"
-      ) {
-
-        messagesDiv.innerHTML += `
-          <div style="margin-bottom:10px;">
-            <strong>Agent:</strong>
-            ${lastMessage.text}
-          </div>
-        `;
-
-        messagesDiv.scrollTop =
-          messagesDiv.scrollHeight;
-      }
-    }
-  );
 
 })();
