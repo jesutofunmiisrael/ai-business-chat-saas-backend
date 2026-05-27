@@ -22,13 +22,13 @@ router.get("/conversations",
 
   router.get(
   "/conversations/:id",
-  protect,
+
   getSingleConversation
 );
 
 
 router.post(
-  "/conversations/:id/agent",
+  "/conversations/:id/reply",
   protect,
   sendAgentMessage
 );
