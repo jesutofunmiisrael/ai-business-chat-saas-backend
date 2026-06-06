@@ -16,6 +16,9 @@ const workspaceRoutes =
 const aiRoutes =
   require("./Routes/AiRoutes");
 
+  const settingsRoute =
+  require("./Routes/Settingsroute");
+
 const app = express();
 
 
@@ -70,8 +73,9 @@ app.use(
   aiRoutes
 );
 
-/* ─────────────────────────────
-   EXPORT APP
-───────────────────────────── */
+app.use(
+  "/api/settings",
+  settingsRoute
+);
 
 module.exports = app;

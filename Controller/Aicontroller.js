@@ -16,9 +16,6 @@ const { getIO } = require(
   "../Sockets/socket"
 );
 
-/* ─────────────────────────────
-   PRIVATE AI CHAT
-───────────────────────────── */
 
 const chatWithAI = async (
   req,

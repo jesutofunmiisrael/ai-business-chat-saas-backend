@@ -178,7 +178,7 @@
 
   };
 
-  // LOAD MESSAGES
+
 
   const loadMessages =
     async () => {
