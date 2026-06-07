@@ -47,20 +47,17 @@ const settingsSchema =
         default:
           "Hi! How can I help you today?",
       },
-
-      aiTone: {
-        type: String,
-
-        enum: [
-          "friendly",
-          "professional",
-          "casual",
-        ],
-
-        default:
-          "friendly",
-      },
-
+aiTone: {
+  type: String,
+  enum: [
+    "Professional",
+    "Friendly",
+    "Playful",
+    "Concise",
+    "Empathetic",
+  ],
+  default: "Professional",
+},
       autoHandoff: {
         type: Boolean,
 
