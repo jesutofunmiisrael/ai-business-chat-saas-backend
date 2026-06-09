@@ -86,8 +86,8 @@ const resetSettings =
             aiName: "ApexChat AI",
             welcomeMessage:
               "Hi! How can I help you today?",
-            aiTone:
-              "friendly",
+          aiTone: 
+          "Professional",
             autoHandoff:
               true,
           },

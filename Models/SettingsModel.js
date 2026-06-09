@@ -34,6 +34,12 @@ const settingsSchema =
         default: "",
       },
 
+      industry: {
+        type: String,
+
+        default: "",
+      },
+
       aiName: {
         type: String,
 
@@ -47,17 +53,22 @@ const settingsSchema =
         default:
           "Hi! How can I help you today?",
       },
-aiTone: {
-  type: String,
-  enum: [
-    "Professional",
-    "Friendly",
-    "Playful",
-    "Concise",
-    "Empathetic",
-  ],
-  default: "Professional",
-},
+
+      aiTone: {
+        type: String,
+
+        enum: [
+          "Professional",
+          "Friendly",
+          "Playful",
+          "Concise",
+          "Empathetic",
+        ],
+
+        default:
+          "Professional",
+      },
+
       autoHandoff: {
         type: Boolean,
 
