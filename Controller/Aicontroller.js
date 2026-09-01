@@ -188,9 +188,6 @@ const getConversations =
 
   };
 
-/* ─────────────────────────────
-   GET SINGLE CONVERSATION
-───────────────────────────── */
 
 const getSingleConversation =
   async (req, res) => {
